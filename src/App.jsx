@@ -6,6 +6,7 @@ import Weather from './components/Weather';
 import ProtectedRoute from './components/ProtectedRoute';
 import { LogOut, Wind } from 'lucide-react';
 import { useAuth } from './hooks/useAuth';
+import ClusterInfo from './components/ClusterInfo';
 
 function AppContent() {
   const { isAuthenticated, logout } = useAuth();
@@ -52,6 +53,7 @@ function AppContent() {
           <span>Django REST & React</span>
         </footer>
       </div>
+      <ClusterInfo />
     </div>
   );
 }
