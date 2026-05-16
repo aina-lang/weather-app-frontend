@@ -107,18 +107,22 @@ const Weather = () => {
           {/* Forecast Grid */}
           {data.type === 'forecast' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-              {data.data.map((day, idx) => (
+              {Object.values(data.data).map((dayData, idx) => {
+                const maxTemp = Math.max(...dayData.forecasts.map(f => f.temperature));
+                const description = dayData.forecasts[0].description;
+                return (
                 <div key={idx} className="bg-white border border-slate-200 p-6 rounded-2xl text-center hover:border-blue-300 hover:shadow-md hover:shadow-blue-500/5 transition-all duration-300">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">
-                    {format(new Date(day.date), 'EEE d MMM', { locale: fr })}
+                    {format(new Date(dayData.date_obj), 'EEE d MMM', { locale: fr })}
                   </p>
                   <div className="text-blue-600 mb-4 flex justify-center bg-blue-50 w-12 h-12 items-center mx-auto rounded-xl">
                     <CloudRain size={24} strokeWidth={2.5} />
                   </div>
-                  <p className="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">{Math.round(day.temp_max)}°</p>
-                  <p className="text-xs font-semibold text-slate-500 capitalize">{day.description}</p>
+                  <p className="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">{maxTemp}°</p>
+                  <p className="text-xs font-semibold text-slate-500 capitalize">{description}</p>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
 
