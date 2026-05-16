@@ -20,7 +20,15 @@ const Login = () => {
       await login(username, password);
       navigate('/');
     } catch (err) {
-      setError('Identifiants incorrects. Veuillez réessayer.');
+      if (err.response) {
+        if (err.response.status === 401) {
+          setError('Identifiants incorrects. Utilisateur non trouvé ou mauvais mot de passe.');
+        } else {
+          setError(`Erreur API: ${err.response.data.error || 'Erreur inconnue'}`);
+        }
+      } else {
+        setError('Erreur réseau. Impossible de contacter le serveur.');
+      }
     } finally {
       setLoading(false);
     }

@@ -14,7 +14,16 @@ export const useWeather = () => {
       setData(weatherData);
       return weatherData;
     } catch (err) {
-      const msg = err.response?.data?.error || 'Erreur lors de la récupération de la météo';
+      let msg = 'Erreur lors de la récupération de la météo';
+      if (err.response) {
+        if (err.response.status === 404) {
+          msg = err.response.data?.error || 'Ville introuvable ou problème avec la clé API météo.';
+        } else {
+          msg = err.response.data?.error || `Erreur serveur (${err.response.status})`;
+        }
+      } else {
+        msg = 'Erreur réseau. Le serveur backend est-il accessible ?';
+      }
       setError(msg);
       throw err;
     } finally {

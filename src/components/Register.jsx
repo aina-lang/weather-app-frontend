@@ -23,7 +23,15 @@ const Register = () => {
         navigate('/login');
       }, 2000);
     } catch (err) {
-      setError('Erreur lors de l’inscription. Le nom d’utilisateur est peut-être déjà pris.');
+      if (err.response) {
+        if (err.response.status === 400 && err.response.data.error === 'Username already exists') {
+          setError('Cet utilisateur est déjà enregistré.');
+        } else {
+          setError(`Erreur API: ${err.response.data.error || 'Erreur inconnue'}`);
+        }
+      } else {
+        setError('Erreur réseau. Impossible de contacter le serveur.');
+      }
     } finally {
       setLoading(false);
     }
