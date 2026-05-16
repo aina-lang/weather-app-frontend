@@ -37,8 +37,8 @@ export default function ClusterInfo() {
       fontFamily: "monospace",
       border: "1px solid rgba(255,255,255,0.2)"
     }}>
-      <div>📦 Pod : <strong>{info.pod_name}</strong></div>
-      <div>🖥️ Node : <strong style={{
+      <div>Pod : <strong>{info.pod_name}</strong></div>
+      <div>Node : <strong style={{
         color: info.node_name === "machine1" ? "#4ade80" :
                info.node_name === "machine2" ? "#60a5fa" : "#f59e0b"
       }}>{info.node_name}</strong></div>
